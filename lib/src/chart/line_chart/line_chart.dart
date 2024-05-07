@@ -1,6 +1,5 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:fl_chart/src/chart/base/axis_chart/axis_chart_scaffold_widget.dart';
-import 'package:fl_chart/src/chart/line_chart/line_chart_helper.dart';
 import 'package:fl_chart/src/chart/line_chart/line_chart_renderer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,12 +12,12 @@ class LineChart extends ImplicitlyAnimatedWidget {
   /// also you can change the [swapAnimationCurve]
   /// which default is [Curves.linear].
   const LineChart(
-    this.data, {
-    this.chartRendererKey,
-    super.key,
-    super.duration = const Duration(milliseconds: 150),
-    super.curve = Curves.linear,
-  });
+      this.data, {
+        this.chartRendererKey,
+        super.key,
+        super.duration = const Duration(milliseconds: 150),
+        super.curve = Curves.linear,
+      });
 
   /// Determines how the [LineChart] should be look like.
   final LineChartData data;
@@ -44,8 +43,6 @@ class _LineChartState extends AnimatedWidgetBaseState<LineChart> {
   final List<ShowingTooltipIndicators> _showingTouchedTooltips = [];
 
   final Map<int, List<int>> _showingTouchedIndicators = {};
-
-  final _lineChartHelper = LineChartHelper();
 
   @override
   Widget build(BuildContext context) {
@@ -79,41 +76,21 @@ class _LineChartState extends AnimatedWidgetBaseState<LineChart> {
   }
 
   LineChartData _getData() {
-    var newData = widget.data;
-
-    /// Calculate minX, maxX, minY, maxY for [LineChartData] if they are null,
-    /// it is necessary to render the chart correctly.
-    if (newData.minX.isNaN ||
-        newData.maxX.isNaN ||
-        newData.minY.isNaN ||
-        newData.maxY.isNaN) {
-      final values = _lineChartHelper.calculateMaxAxisValues(
-        newData.lineBarsData,
-      );
-      newData = newData.copyWith(
-        minX: newData.minX.isNaN ? values.minX : newData.minX,
-        maxX: newData.maxX.isNaN ? values.maxX : newData.maxX,
-        minY: newData.minY.isNaN ? values.minY : newData.minY,
-        maxY: newData.maxY.isNaN ? values.maxY : newData.maxY,
-      );
-    }
-
-    final lineTouchData = newData.lineTouchData;
+    final lineTouchData = widget.data.lineTouchData;
     if (lineTouchData.enabled && lineTouchData.handleBuiltInTouches) {
       _providedTouchCallback = lineTouchData.touchCallback;
-      newData = newData.copyWith(
-        lineTouchData:
-            newData.lineTouchData.copyWith(touchCallback: _handleBuiltInTouch),
+      return widget.data.copyWith(
+        lineTouchData: widget.data.lineTouchData
+            .copyWith(touchCallback: _handleBuiltInTouch),
       );
     }
-
-    return newData;
+    return widget.data;
   }
 
   void _handleBuiltInTouch(
-    FlTouchEvent event,
-    LineTouchResponse? touchResponse,
-  ) {
+      FlTouchEvent event,
+      LineTouchResponse? touchResponse,
+      ) {
     if (!mounted) {
       return;
     }
@@ -151,7 +128,7 @@ class _LineChartState extends AnimatedWidgetBaseState<LineChart> {
     _lineChartDataTween = visitor(
       _lineChartDataTween,
       _getData(),
-      (dynamic value) =>
+          (dynamic value) =>
           LineChartDataTween(begin: value as LineChartData, end: widget.data),
     ) as LineChartDataTween?;
   }

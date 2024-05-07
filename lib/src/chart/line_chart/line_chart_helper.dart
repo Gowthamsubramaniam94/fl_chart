@@ -7,12 +7,12 @@ class LineChartHelper {
   /// Contains List of cached results, base on [List<LineChartBarData>]
   ///
   /// We use it to prevent redundant calculations
-  final Map<ListWrapper<LineChartBarData>, LineChartMinMaxAxisValues>
-      _cachedResults = {};
+  static final Map<ListWrapper<LineChartBarData>, LineChartMinMaxAxisValues>
+  _cachedResults = {};
 
-  LineChartMinMaxAxisValues calculateMaxAxisValues(
-    List<LineChartBarData> lineBarsData,
-  ) {
+  static LineChartMinMaxAxisValues calculateMaxAxisValues(
+      List<LineChartBarData> lineBarsData,
+      ) {
     if (lineBarsData.isEmpty) {
       return const LineChartMinMaxAxisValues(0, 0, 0, 0);
     }
@@ -77,12 +77,12 @@ class LineChartHelper {
 /// Holds minX, maxX, minY, and maxY for use in [LineChartData]
 class LineChartMinMaxAxisValues with EquatableMixin {
   const LineChartMinMaxAxisValues(
-    this.minX,
-    this.maxX,
-    this.minY,
-    this.maxY, {
-    this.readFromCache = false,
-  });
+      this.minX,
+      this.maxX,
+      this.minY,
+      this.maxY, {
+        this.readFromCache = false,
+      });
   final double minX;
   final double maxX;
   final double minY;

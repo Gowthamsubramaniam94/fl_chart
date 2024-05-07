@@ -189,7 +189,7 @@ class _LineChartSample3State extends State<LineChartSample3> {
                                 color: Colors.white,
                                 strokeWidth: 5,
                                 strokeColor:
-                                    widget.indicatorTouchedSpotStrokeColor,
+                                widget.indicatorTouchedSpotStrokeColor,
                               );
                             } else {
                               return FlDotSquarePainter(
@@ -197,7 +197,7 @@ class _LineChartSample3State extends State<LineChartSample3> {
                                 color: Colors.white,
                                 strokeWidth: 5,
                                 strokeColor:
-                                    widget.indicatorTouchedSpotStrokeColor,
+                                widget.indicatorTouchedSpotStrokeColor,
                               );
                             }
                           },
@@ -206,7 +206,7 @@ class _LineChartSample3State extends State<LineChartSample3> {
                     }).toList();
                   },
                   touchTooltipData: LineTouchTooltipData(
-                    getTooltipColor: (touchedSpot) => widget.tooltipBgColor,
+                    tooltipBgColor: widget.tooltipBgColor,
                     getTooltipItems: (List<LineBarSpot> touchedBarSpots) {
                       return touchedBarSpots.map((barSpot) {
                         final flSpot = barSpot;

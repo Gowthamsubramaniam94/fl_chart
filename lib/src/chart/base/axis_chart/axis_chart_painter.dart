@@ -37,10 +37,10 @@ abstract class AxisChartPainter<D extends AxisChartData>
   /// Paints [AxisChartData] into the provided canvas.
   @override
   void paint(
-    BuildContext context,
-    CanvasWrapper canvasWrapper,
-    PaintHolder<D> holder,
-  ) {
+      BuildContext context,
+      CanvasWrapper canvasWrapper,
+      PaintHolder<D> holder,
+      ) {
     super.paint(context, canvasWrapper, holder);
     drawBackground(canvasWrapper, holder);
     drawRangeAnnotation(canvasWrapper, holder);
@@ -191,7 +191,7 @@ abstract class AxisChartPainter<D extends AxisChartData>
 
     if (data.rangeAnnotations.horizontalRangeAnnotations.isNotEmpty) {
       for (final annotation
-          in data.rangeAnnotations.horizontalRangeAnnotations) {
+      in data.rangeAnnotations.horizontalRangeAnnotations) {
         final from = Offset(0, getPixelY(annotation.y1, viewSize, holder));
         final to = Offset(
           viewSize.width,
@@ -212,10 +212,10 @@ abstract class AxisChartPainter<D extends AxisChartData>
   }
 
   void drawExtraLines(
-    BuildContext context,
-    CanvasWrapper canvasWrapper,
-    PaintHolder<D> holder,
-  ) {
+      BuildContext context,
+      CanvasWrapper canvasWrapper,
+      PaintHolder<D> holder,
+      ) {
     super.paint(context, canvasWrapper, holder);
     final data = holder.data;
     final viewSize = canvasWrapper.size;
@@ -230,11 +230,11 @@ abstract class AxisChartPainter<D extends AxisChartData>
   }
 
   void drawHorizontalLines(
-    BuildContext context,
-    CanvasWrapper canvasWrapper,
-    PaintHolder<D> holder,
-    Size viewSize,
-  ) {
+      BuildContext context,
+      CanvasWrapper canvasWrapper,
+      PaintHolder<D> holder,
+      Size viewSize,
+      ) {
     for (final line in holder.data.extraLinesData.horizontalLines) {
       final from = Offset(0, getPixelY(line.y, viewSize, holder));
       final to = Offset(viewSize.width, getPixelY(line.y, viewSize, holder));
@@ -290,7 +290,7 @@ abstract class AxisChartPainter<D extends AxisChartData>
         if (line.label.show) {
           final label = line.label;
           final style =
-              TextStyle(fontSize: 11, color: line.color).merge(label.style);
+          TextStyle(fontSize: 11, color: line.color).merge(label.style);
           final padding = label.padding as EdgeInsets;
 
           final span = TextSpan(
@@ -305,43 +305,28 @@ abstract class AxisChartPainter<D extends AxisChartData>
           // ignore: cascade_invocations
           tp.layout();
 
-          switch (label.direction) {
-            case LabelDirection.horizontal:
-              canvasWrapper.drawText(
-                tp,
-                label.alignment.withinRect(
-                  Rect.fromLTRB(
-                    from.dx + padding.left,
-                    from.dy - padding.bottom - tp.height,
-                    to.dx - padding.right - tp.width,
-                    to.dy + padding.top,
-                  ),
-                ),
-              );
-            case LabelDirection.vertical:
-              canvasWrapper.drawVerticalText(
-                tp,
-                label.alignment.withinRect(
-                  Rect.fromLTRB(
-                    from.dx + padding.left + tp.height,
-                    from.dy - padding.bottom - tp.width,
-                    to.dx - padding.right,
-                    to.dy + padding.top,
-                  ),
-                ),
-              );
-          }
+          canvasWrapper.drawText(
+            tp,
+            label.alignment.withinRect(
+              Rect.fromLTRB(
+                from.dx + padding.left,
+                from.dy - padding.bottom - tp.height,
+                to.dx - padding.right - tp.width,
+                to.dy + padding.top,
+              ),
+            ),
+          );
         }
       }
     }
   }
 
   void drawVerticalLines(
-    BuildContext context,
-    CanvasWrapper canvasWrapper,
-    PaintHolder<D> holder,
-    Size viewSize,
-  ) {
+      BuildContext context,
+      CanvasWrapper canvasWrapper,
+      PaintHolder<D> holder,
+      Size viewSize,
+      ) {
     for (final line in holder.data.extraLinesData.verticalLines) {
       final from = Offset(getPixelX(line.x, viewSize, holder), 0);
       final to = Offset(getPixelX(line.x, viewSize, holder), viewSize.height);
@@ -387,7 +372,7 @@ abstract class AxisChartPainter<D extends AxisChartData>
           final centerX = line.image!.width / 2;
           final centerY = line.image!.height + 2;
           final centeredImageOffset =
-              Offset(to.dx - centerX, viewSize.height - centerY);
+          Offset(to.dx - centerX, viewSize.height - centerY);
           canvasWrapper.drawImage(
             line.image!,
             centeredImageOffset,
@@ -398,7 +383,7 @@ abstract class AxisChartPainter<D extends AxisChartData>
         if (line.label.show) {
           final label = line.label;
           final style =
-              TextStyle(fontSize: 11, color: line.color).merge(label.style);
+          TextStyle(fontSize: 11, color: line.color).merge(label.style);
           final padding = label.padding as EdgeInsets;
 
           final span = TextSpan(
@@ -413,32 +398,17 @@ abstract class AxisChartPainter<D extends AxisChartData>
           // ignore: cascade_invocations
           tp.layout();
 
-          switch (label.direction) {
-            case LabelDirection.horizontal:
-              canvasWrapper.drawText(
-                tp,
-                label.alignment.withinRect(
-                  Rect.fromLTRB(
-                    from.dx - padding.right - tp.width,
-                    from.dy + padding.top,
-                    to.dx + padding.left,
-                    to.dy - padding.bottom - tp.height,
-                  ),
-                ),
-              );
-            case LabelDirection.vertical:
-              canvasWrapper.drawVerticalText(
-                tp,
-                label.alignment.withinRect(
-                  Rect.fromLTRB(
-                    from.dx - padding.right,
-                    from.dy + padding.top,
-                    to.dx + padding.left + tp.height,
-                    to.dy - padding.bottom - tp.width,
-                  ),
-                ),
-              );
-          }
+          canvasWrapper.drawText(
+            tp,
+            label.alignment.withinRect(
+              Rect.fromLTRB(
+                to.dx - padding.right - tp.width,
+                from.dy + padding.top,
+                from.dx + padding.left,
+                to.dy - padding.bottom,
+              ),
+            ),
+          );
         }
       }
     }
@@ -470,11 +440,11 @@ abstract class AxisChartPainter<D extends AxisChartData>
   /// With this function we can get horizontal
   /// position for the tooltip.
   double getTooltipLeft(
-    double dx,
-    double tooltipWidth,
-    FLHorizontalAlignment tooltipHorizontalAlignment,
-    double tooltipHorizontalOffset,
-  ) {
+      double dx,
+      double tooltipWidth,
+      FLHorizontalAlignment tooltipHorizontalAlignment,
+      double tooltipHorizontalOffset,
+      ) {
     switch (tooltipHorizontalAlignment) {
       case FLHorizontalAlignment.center:
         return dx - (tooltipWidth / 2) + tooltipHorizontalOffset;

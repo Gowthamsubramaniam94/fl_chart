@@ -34,7 +34,7 @@ class _LineChartSample8State extends State<LineChartSample8> {
         '<svg height="14" width="14" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" transform="translate(-.000014)"><circle cx="7" cy="7" fill="#495DFF" r="7"/><path d="m7 10.9999976c1.6562389 0 2.99998569-1.34374678 2.99998569-2.99999283s-1.34374679-4.99998808-2.99998569-4.99998808c-1.6562532 0-3 3.34374203-3 4.99998808s1.3437468 2.99999283 3 2.99999283z" fill="#fff" fill-rule="nonzero"/></g></svg>';
 
     final pictureInfo =
-        await vg.loadPicture(const SvgStringLoader(rawSvg), null);
+    await vg.loadPicture(const SvgStringLoader(rawSvg), null);
 
     final sizedPicture = SizedPicture(pictureInfo.picture, 14, 14);
     return sizedPicture;
@@ -167,13 +167,12 @@ class _LineChartSample8State extends State<LineChartSample8> {
             dashArray: [5, 10],
             label: VerticalLineLabel(
               show: true,
-              alignment: Alignment.bottomRight,
-              padding: const EdgeInsets.only(left: 5, bottom: 5),
+              alignment: Alignment.topRight,
+              padding: const EdgeInsets.only(left: 10, top: 5),
               style: const TextStyle(
                 fontSize: 9,
                 fontWeight: FontWeight.bold,
               ),
-              direction: LabelDirection.vertical,
               labelResolver: (line) => 'V: ${line.x}',
             ),
           ),
@@ -231,15 +230,15 @@ class _LineChartSample8State extends State<LineChartSample8> {
               FlDotData(
                 getDotPainter: (spot, percent, barData, index) =>
                     FlDotCirclePainter(
-                  radius: 8,
-                  color: AppColors.contentColorOrange,
-                ),
+                      radius: 8,
+                      color: AppColors.contentColorOrange,
+                    ),
               ),
             );
           }).toList();
         },
-        touchTooltipData: LineTouchTooltipData(
-          getTooltipColor: (touchedSpot) => AppColors.contentColorBlue,
+        touchTooltipData: const LineTouchTooltipData(
+          tooltipBgColor: AppColors.contentColorBlue,
         ),
       ),
       borderData: FlBorderData(

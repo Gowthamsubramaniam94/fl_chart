@@ -27,14 +27,14 @@ class _LineChartSample5State extends State<LineChartSample5> {
   List<int> showingTooltipOnSpots = [1, 3, 5];
 
   List<FlSpot> get allSpots => const [
-        FlSpot(0, 1),
-        FlSpot(1, 2),
-        FlSpot(2, 1.5),
-        FlSpot(3, 3),
-        FlSpot(4, 3.5),
-        FlSpot(5, 5),
-        FlSpot(6, 8),
-      ];
+    FlSpot(0, 1),
+    FlSpot(1, 2),
+    FlSpot(2, 1.5),
+    FlSpot(3, 3),
+    FlSpot(4, 3.5),
+    FlSpot(5, 5),
+    FlSpot(6, 8),
+  ];
 
   Widget bottomTitleWidgets(double value, TitleMeta meta, double chartWidth) {
     final style = TextStyle(
@@ -167,21 +167,21 @@ class _LineChartSample5State extends State<LineChartSample5> {
                         show: true,
                         getDotPainter: (spot, percent, barData, index) =>
                             FlDotCirclePainter(
-                          radius: 8,
-                          color: lerpGradient(
-                            barData.gradient!.colors,
-                            barData.gradient!.stops!,
-                            percent / 100,
-                          ),
-                          strokeWidth: 2,
-                          strokeColor: widget.indicatorStrokeColor,
-                        ),
+                              radius: 8,
+                              color: lerpGradient(
+                                barData.gradient!.colors,
+                                barData.gradient!.stops!,
+                                percent / 100,
+                              ),
+                              strokeWidth: 2,
+                              strokeColor: widget.indicatorStrokeColor,
+                            ),
                       ),
                     );
                   }).toList();
                 },
                 touchTooltipData: LineTouchTooltipData(
-                  getTooltipColor: (touchedSpot) => Colors.pink,
+                  tooltipBgColor: Colors.pink,
                   tooltipRoundedRadius: 8,
                   getTooltipItems: (List<LineBarSpot> lineBarsSpot) {
                     return lineBarsSpot.map((lineBarSpot) {
