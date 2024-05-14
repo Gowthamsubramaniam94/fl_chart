@@ -9,16 +9,15 @@ class BarChartHelper {
   /// Contains List of cached results, base on [List<BarChartGroupData>]
   ///
   /// We use it to prevent redundant calculations
-  final Map<ListWrapper<BarChartGroupData>, BarChartMinMaxAxisValues>
-      _cachedResults = {};
+  static final Map<ListWrapper<BarChartGroupData>, BarChartMinMaxAxisValues> _cachedResults = {};
 
   /// Calculates minY, and maxY based on [barGroups],
   /// returns cached values, to prevent redundant calculations.
-  BarChartMinMaxAxisValues calculateMaxAxisValues(
+  static BarChartMinMaxAxisValues calculateMaxAxisValues(
     List<BarChartGroupData> barGroups,
   ) {
     if (barGroups.isEmpty) {
-      return BarChartMinMaxAxisValues(0, 0);
+      return BarChartMinMaxAxisValues(0, 0, 0, 0);
     }
 
     final listWrapper = barGroups.toWrapperClass();
@@ -32,9 +31,11 @@ class BarChartHelper {
       barGroup = barGroups.firstWhere((element) => element.barRods.isNotEmpty);
     } catch (e) {
       // There is no barChartGroupData with at least one barRod
-      return BarChartMinMaxAxisValues(0, 0);
+      return BarChartMinMaxAxisValues(0, 0, 0, 0);
     }
 
+    var minX = barGroups[0].x.toDouble();
+    var maxX = barGroups.length.toDouble();
     var maxY = max(barGroup.barRods[0].fromY, barGroup.barRods[0].toY);
     var minY = min(barGroup.barRods[0].fromY, barGroup.barRods[0].toY);
 
@@ -58,7 +59,7 @@ class BarChartHelper {
       }
     }
 
-    final result = BarChartMinMaxAxisValues(minY, maxY);
+    final result = BarChartMinMaxAxisValues(minX, maxX, minY, maxY);
     _cachedResults[listWrapper] = result;
     return result;
   }
@@ -66,21 +67,28 @@ class BarChartHelper {
 
 /// Holds minY, and maxY for use in [BarChartData]
 class BarChartMinMaxAxisValues with EquatableMixin {
-  BarChartMinMaxAxisValues(this.minY, this.maxY, {this.readFromCache = false});
+  BarChartMinMaxAxisValues(this.minX, this.maxX, this.minY, this.maxY,
+      {this.readFromCache = false});
 
+  final double minX;
+  final double maxX;
   final double minY;
   final double maxY;
   final bool readFromCache;
 
   @override
-  List<Object?> get props => [minY, maxY, readFromCache];
+  List<Object?> get props => [minX, maxX, minY, maxY, readFromCache];
 
   BarChartMinMaxAxisValues copyWith({
+    double? minX,
+    double? maxX,
     double? minY,
     double? maxY,
     bool? readFromCache,
   }) {
     return BarChartMinMaxAxisValues(
+      minX ?? this.minX,
+      maxX ?? this.maxX,
       minY ?? this.minY,
       maxY ?? this.maxY,
       readFromCache: readFromCache ?? this.readFromCache,

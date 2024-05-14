@@ -8,7 +8,7 @@ class BarChartSample2 extends StatefulWidget {
   final Color leftBarColor = AppColors.contentColorYellow;
   final Color rightBarColor = AppColors.contentColorRed;
   final Color avgColor =
-      AppColors.contentColorOrange.avg(AppColors.contentColorRed);
+  AppColors.contentColorOrange.avg(AppColors.contentColorRed);
   @override
   State<StatefulWidget> createState() => BarChartSample2State();
 }
@@ -30,7 +30,15 @@ class BarChartSample2State extends State<BarChartSample2> {
     final barGroup4 = makeGroupData(3, 20, 16);
     final barGroup5 = makeGroupData(4, 17, 6);
     final barGroup6 = makeGroupData(5, 19, 1.5);
-    final barGroup7 = makeGroupData(6, 10, 1.5);
+    final barGroup7 = makeGroupData(6, 10, 3);
+    final barGroup8 = makeGroupData(7, 5, 10);
+    final barGroup9 = makeGroupData(8, 12, 14);
+    final barGroup10 = makeGroupData(9, 4, 6);
+    final barGroup11= makeGroupData(10, 9, 5);
+    final barGroup12 = makeGroupData(11, 15, 8);
+    final barGroup13 = makeGroupData(12, 3, 13);
+    final barGroup14 = makeGroupData(13, 1, 16);
+    final barGroup15 = makeGroupData(14, 12, 4);
 
     final items = [
       barGroup1,
@@ -40,6 +48,14 @@ class BarChartSample2State extends State<BarChartSample2> {
       barGroup5,
       barGroup6,
       barGroup7,
+      barGroup8,
+      barGroup9,
+      barGroup10,
+      barGroup11,
+      barGroup12,
+      barGroup13,
+      barGroup14,
+      barGroup15
     ];
 
     rawBarGroups = items;
@@ -82,12 +98,14 @@ class BarChartSample2State extends State<BarChartSample2> {
             Expanded(
               child: BarChart(
                 BarChartData(
+                  maxX: showingBarGroups.length.toDouble(),
+                  horizontalZoomConfig: const ZoomConfig(enabled: true, amount: 25),
                   maxY: 20,
+                  minX: 0,
+                  minY: 0,
                   barTouchData: BarTouchData(
                     touchTooltipData: BarTouchTooltipData(
-                      getTooltipColor: ((group) {
-                        return Colors.grey;
-                      }),
+                      tooltipBgColor: Colors.grey,
                       getTooltipItem: (a, b, c, d) => null,
                     ),
                     touchCallback: (FlTouchEvent event, response) {
@@ -111,7 +129,7 @@ class BarChartSample2State extends State<BarChartSample2> {
                         if (touchedGroupIndex != -1) {
                           var sum = 0.0;
                           for (final rod
-                              in showingBarGroups[touchedGroupIndex].barRods) {
+                          in showingBarGroups[touchedGroupIndex].barRods) {
                             sum += rod.toY;
                           }
                           final avg = sum /
@@ -121,13 +139,13 @@ class BarChartSample2State extends State<BarChartSample2> {
 
                           showingBarGroups[touchedGroupIndex] =
                               showingBarGroups[touchedGroupIndex].copyWith(
-                            barRods: showingBarGroups[touchedGroupIndex]
-                                .barRods
-                                .map((rod) {
-                              return rod.copyWith(
-                                  toY: avg, color: widget.avgColor);
-                            }).toList(),
-                          );
+                                barRods: showingBarGroups[touchedGroupIndex]
+                                    .barRods
+                                    .map((rod) {
+                                  return rod.copyWith(
+                                      toY: avg, color: widget.avgColor);
+                                }).toList(),
+                              );
                         }
                       });
                     },
@@ -145,6 +163,7 @@ class BarChartSample2State extends State<BarChartSample2> {
                         showTitles: true,
                         getTitlesWidget: bottomTitles,
                         reservedSize: 42,
+                        interval: 1
                       ),
                     ),
                     leftTitles: AxisTitles(
@@ -197,7 +216,7 @@ class BarChartSample2State extends State<BarChartSample2> {
   }
 
   Widget bottomTitles(double value, TitleMeta meta) {
-    final titles = <String>['Mn', 'Te', 'Wd', 'Tu', 'Fr', 'St', 'Su'];
+    final titles = <String>['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15'];
 
     final Widget text = Text(
       titles[value.toInt()],
@@ -220,11 +239,11 @@ class BarChartSample2State extends State<BarChartSample2> {
       barsSpace: 4,
       x: x,
       barRods: [
-        BarChartRodData(
-          toY: y1,
-          color: widget.leftBarColor,
-          width: width,
-        ),
+        // BarChartRodData(
+        //   toY: y1,
+        //   color: widget.leftBarColor,
+        //   width: width,
+        // ),
         BarChartRodData(
           toY: y2,
           color: widget.rightBarColor,

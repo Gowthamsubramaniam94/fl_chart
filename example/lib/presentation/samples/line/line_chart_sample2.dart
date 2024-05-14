@@ -109,6 +109,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
 
   LineChartData mainData() {
     return LineChartData(
+        horizontalZoomConfig: const ZoomConfig(enabled: true, amount: 20),
       gridData: FlGridData(
         show: true,
         drawVerticalLine: true,
@@ -157,7 +158,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
         border: Border.all(color: const Color(0xff37434d)),
       ),
       minX: 0,
-      maxX: 11,
+      maxX: 15,
       minY: 0,
       maxY: 6,
       lineBarsData: [

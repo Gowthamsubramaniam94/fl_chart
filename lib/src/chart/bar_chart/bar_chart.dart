@@ -1,5 +1,4 @@
 import 'package:fl_chart/fl_chart.dart';
-import 'package:fl_chart/src/chart/bar_chart/bar_chart_helper.dart';
 import 'package:fl_chart/src/chart/bar_chart/bar_chart_renderer.dart';
 import 'package:fl_chart/src/chart/base/axis_chart/axis_chart_scaffold_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -45,8 +44,6 @@ class _BarChartState extends AnimatedWidgetBaseState<BarChart> {
 
   final Map<int, List<int>> _showingTouchedTooltips = {};
 
-  final _barChartHelper = BarChartHelper();
-
   @override
   Widget build(BuildContext context) {
     final showingData = _getData();
@@ -62,8 +59,7 @@ class _BarChartState extends AnimatedWidgetBaseState<BarChart> {
   }
 
   BarChartData _withTouchedIndicators(BarChartData barChartData) {
-    if (!barChartData.barTouchData.enabled ||
-        !barChartData.barTouchData.handleBuiltInTouches) {
+    if (!barChartData.barTouchData.enabled || !barChartData.barTouchData.handleBuiltInTouches) {
       return barChartData;
     }
 
@@ -84,24 +80,14 @@ class _BarChartState extends AnimatedWidgetBaseState<BarChart> {
   }
 
   BarChartData _getData() {
-    var newData = widget.data;
-    if (newData.minY.isNaN || newData.maxY.isNaN) {
-      final values = _barChartHelper.calculateMaxAxisValues(newData.barGroups);
-      newData = newData.copyWith(
-        minY: newData.minY.isNaN ? values.minY : newData.minY,
-        maxY: newData.maxY.isNaN ? values.maxY : newData.maxY,
-      );
-    }
-
-    final barTouchData = newData.barTouchData;
+    final barTouchData = widget.data.barTouchData;
     if (barTouchData.enabled && barTouchData.handleBuiltInTouches) {
       _providedTouchCallback = barTouchData.touchCallback;
-      return newData.copyWith(
-        barTouchData:
-            newData.barTouchData.copyWith(touchCallback: _handleBuiltInTouch),
+      return widget.data.copyWith(
+        barTouchData: widget.data.barTouchData.copyWith(touchCallback: _handleBuiltInTouch),
       );
     }
-    return newData;
+    return widget.data;
   }
 
   void _handleBuiltInTouch(
@@ -113,9 +99,7 @@ class _BarChartState extends AnimatedWidgetBaseState<BarChart> {
     }
     _providedTouchCallback?.call(event, touchResponse);
 
-    if (!event.isInterestedForInteractions ||
-        touchResponse == null ||
-        touchResponse.spot == null) {
+    if (!event.isInterestedForInteractions || touchResponse == null || touchResponse.spot == null) {
       setState(_showingTouchedTooltips.clear);
       return;
     }
@@ -133,9 +117,8 @@ class _BarChartState extends AnimatedWidgetBaseState<BarChart> {
   void forEachTween(TweenVisitor<dynamic> visitor) {
     _barChartDataTween = visitor(
       _barChartDataTween,
-      _getData(),
-      (dynamic value) =>
-          BarChartDataTween(begin: value as BarChartData, end: widget.data),
+      widget.data,
+      (dynamic value) => BarChartDataTween(begin: value as BarChartData, end: widget.data),
     ) as BarChartDataTween?;
   }
 }

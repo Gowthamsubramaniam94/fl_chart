@@ -72,7 +72,9 @@ class BarChartSample4State extends State<BarChartSample4> {
             final barsWidth = 8.0 * constraints.maxWidth / 400;
             return BarChart(
               BarChartData(
-                alignment: BarChartAlignment.center,
+                maxX: 25,
+                horizontalZoomConfig: const ZoomConfig(enabled: true, amount: 20),
+                //alignment: BarChartAlignment.center,
                 barTouchData: BarTouchData(
                   enabled: false,
                 ),

@@ -23,11 +23,11 @@ class BarChartSample7 extends StatefulWidget {
 
 class _BarChartSample7State extends State<BarChartSample7> {
   BarChartGroupData generateBarGroup(
-    int x,
-    Color color,
-    double value,
-    double shadowValue,
-  ) {
+      int x,
+      Color color,
+      double value,
+      double shadowValue,
+      ) {
     return BarChartGroupData(
       x: x,
       barRods: [
@@ -122,14 +122,14 @@ class _BarChartSample7State extends State<BarChartSample7> {
               enabled: true,
               handleBuiltInTouches: false,
               touchTooltipData: BarTouchTooltipData(
-                getTooltipColor: (group) => Colors.transparent,
+                tooltipBgColor: Colors.transparent,
                 tooltipMargin: 0,
                 getTooltipItem: (
-                  BarChartGroupData group,
-                  int groupIndex,
-                  BarChartRodData rod,
-                  int rodIndex,
-                ) {
+                    BarChartGroupData group,
+                    int groupIndex,
+                    BarChartRodData rod,
+                    int rodIndex,
+                    ) {
                   return BarTooltipItem(
                     rod.toY.toString(),
                     TextStyle(
@@ -210,7 +210,7 @@ class _IconWidgetState extends AnimatedWidgetBaseState<_IconWidget> {
     _rotationTween = visitor(
       _rotationTween,
       widget.isSelected ? 1.0 : 0.0,
-      (dynamic value) => Tween<double>(
+          (dynamic value) => Tween<double>(
         begin: value as double,
         end: widget.isSelected ? 1.0 : 0.0,
       ),

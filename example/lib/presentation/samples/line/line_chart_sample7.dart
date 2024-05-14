@@ -96,6 +96,7 @@ class LineChartSample7 extends StatelessWidget {
         ),
         child: LineChart(
           LineChartData(
+            maxX: 15,
             lineTouchData: const LineTouchData(enabled: false),
             lineBarsData: [
               LineChartBarData(
@@ -185,6 +186,7 @@ class LineChartSample7 extends StatelessWidget {
                 return value == 1 || value == 6 || value == 4 || value == 5;
               },
             ),
+              horizontalZoomConfig: const ZoomConfig(enabled: true, amount: 20)
           ),
         ),
       ),
